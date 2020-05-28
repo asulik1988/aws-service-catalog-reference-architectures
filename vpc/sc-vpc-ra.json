@@ -185,7 +185,7 @@
             "Type": "AWS::EC2::VPC",
             "Properties": {
                 "CidrBlock": {
-                    "Ref": "VPCCIDR"
+                    "Ref": { "Fn::Select" : [ "0", {"Ref" : "VPCIPRange"} ] }
                 },
                 "EnableDnsSupport": true,
                 "EnableDnsHostnames": true,
@@ -194,7 +194,7 @@
                     {
                         "Key": "Name",
                         "Value": {
-                            "Fn::Sub": "SC-VPC-RA-${VPCCIDR}"
+                            "Fn::Sub": "SC-VPC-RA-TEST_VPC"
                         }
                     },
                     {
@@ -279,7 +279,7 @@
                     {
                         "Key": "Name",
                         "Value": {
-                            "Ref": "VPCCIDR"
+                            "Ref": { "Fn::Select" : [ "0", {"Ref" : "VPCIPRange"} ] }
                         }
                     },
                     {
@@ -307,7 +307,7 @@
                     "Ref": "RegionAZ1Name"
                 },
                 "CidrBlock": {
-                    "Ref": "SubnetAPublicCIDR"
+                    "Ref": { "Fn::Select" : [ "0", {"Ref" : "PublicSubnets"} ] }
                 },
                 "MapPublicIpOnLaunch": true,
                 "VpcId": {
@@ -336,7 +336,7 @@
                     "Ref": "RegionAZ2Name"
                 },
                 "CidrBlock": {
-                    "Ref": "SubnetBPublicCIDR"
+                    "Ref": { "Fn::Select" : [ "1", {"Ref" : "PublicSubnets"} ] }
                 },
                 "MapPublicIpOnLaunch": true,
                 "VpcId": {
@@ -365,7 +365,7 @@
                     "Ref": "RegionAZ1Name"
                 },
                 "CidrBlock": {
-                    "Ref": "SubnetAPrivateCIDR"
+                    "Ref": { "Fn::Select" : [ "0", {"Ref" : "PrivateSubnets"} ] }
                 },
                 "VpcId": {
                     "Ref": "VPC"
@@ -393,7 +393,7 @@
                     "Ref": "RegionAZ2Name"
                 },
                 "CidrBlock": {
-                    "Ref": "SubnetBPrivateCIDR"
+                    "Ref": { "Fn::Select" : [ "1", {"Ref" : "PrivateSubnets"} ] }
                 },
                 "VpcId": {
                     "Ref": "VPC"
@@ -879,7 +879,7 @@
         },
         "VPCCIDR": {
             "Value": {
-                "Fn::GetAtt": ["VPC","CidrBlock"]
+                "Fn::Select" : [ "0", {"Ref" : "VPCIPRange"} ]
             }
         },
         "SubnetAPublicCIDR": {
